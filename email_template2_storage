@@ -1,0 +1,21 @@
+<div style="font-family:Helvetica;">
+<h2>@if ($alert->state == 1) <span style="color:red;">{{ $alert->severity }} @endif
+@if ($alert->state == 2) <span style="color:goldenrod;">acknowledged @endif</span>
+@if ($alert->state == 3) <span style="color:green;">recovering @endif</span>
+@if ($alert->state == 0) <span style="color:green;">recovered @endif</span>
+</h2>
+<b>Host:</b> {{ $alert->hostname }}<br>
+<b>Hardware:</b> {{ $alert->hardware }}<br>
+<b>Location:</b> {{ $alert->location }}<br>
+<b>Duration:</b> {{ $alert->elapsed }}<br>
+<b>Alert name:</b> {{ $alert->name }}<br>
+<b>Alert notes:</b> {{ $alert->alert_notes }}<br>
+<br>
+
+@if ($alert->faults)
+@foreach ($alert->faults as $key => $value)
+Mount Point: {{ $value['storage_descr'] }}
+Percent Utilized: {{ $value['storage_perc'] }}<br><br>
+@endforeach                                                                                                             
+@endif
+</div>
