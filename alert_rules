@@ -1,0 +1,4 @@
+#Gluster bricks above 90% - adapt VOLNAME
+macros.device_up = 1 AND storage.storage_descr REGEXP "/(mnt|bricks)/VOLNAME.*/brick.*" AND storage.storage_perc >= 90
+#Root fs above 75%
+macros.device_up = 1 AND storage.storage_descr = "/" AND storage.storage_perc >= 75
