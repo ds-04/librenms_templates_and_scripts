@@ -4,3 +4,6 @@ macros.device_up = 1 AND storage.storage_descr REGEXP "/(mnt|bricks)/VOLNAME.*/b
 macros.device_up = 1 AND storage.storage_descr = "/" AND storage.storage_perc >= 75
 #Any storage above 90%
 macros.device_up = 1 AND storage.storage_perc >= 90 AND
+
+#Average CPU usage - advanced sql query
+SELECT devices.device_id,AVG(processors.processor_usage) as cpu_avg FROM devices,processors WHERE (devices.device_id= ? AND devices.device_id = processors.device_id) AND (devices.status = 1 && (devices.disabled = 0 && devices.ignore = 0)) = 1 GROUP BY processors.processor_usage,devices.device_id HAVING processors.processor_usage > 90;
