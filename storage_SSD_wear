@@ -1,0 +1,52 @@
+<div style="font-family:Helvetica;">
+<h2>@if ($alert->state == 1) <span style="color:red;">{{ $alert->severity }} @endif
+@if ($alert->state == 2) <span style="color:goldenrod;">acknowledged @endif</span>
+@if ($alert->state == 3) <span style="color:green;">recovering @endif</span>
+@if ($alert->state == 0) <span style="color:green;">recovered @endif</span>
+</h2>
+<b>Host:</b> {{ $alert->hostname }}<br>
+<b>Hardware:</b> {{ $alert->hardware }}<br>
+<b>Location:</b> {{ $alert->location }}<br>
+<b>Duration:</b> {{ $alert->elapsed }}<br>
+<b>Alert name:</b> {{ $alert->name }}<br>
+<b>Alert notes:</b> {{ $alert->alert_notes }}<br>
+<br>
+
+<div style="font-family: Helvetica, Arial, sans-serif; font-size: 14px; color: #333;">
+    <h2 style="color:red;">
+        [{{ strtoupper($alert->name) }}] Alert - {{ $alert->hostname }}
+    </h2>
+    <p>
+
+    <p><strong>Time:</strong> {{ $alert->timestamp }}</p>
+
+    @if (isset($alert->applications))
+        <h3 style="margin-top: 20px;">Application Data:</h3>
+        <table style="border-collapse: collapse; width: 100%; max-width: 600px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Metric / Attribute</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f2f2f2;">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($alert->faults as $fault)
+                    <tr>
+                        <td style="border: 1px solid #ddd; padding: 8px;">{{ $fault['string'] }}</td>
+                        <td style="border: 1px solid #ddd; padding: 8px;">
+                            <!-- Additional parsing can be applied here based on your OIDs -->
+                            {{ $fault['value'] ?? 'N/A' }}
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+
+    <p style="margin-top: 20px;">
+        View device details: <a href="{{ config('app.url') }}/device/device={{ $alert->device_id }}">Go to LibreNMS</a>
+    </p>
+</div>
+
+
+</div>
