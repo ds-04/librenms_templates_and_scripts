@@ -10,3 +10,6 @@ SELECT devices.device_id,AVG(processors.processor_usage) as cpu_avg FROM devices
 
 #SMART application SSD wear
 SELECT * FROM devices,applications,application_metrics WHERE (devices.device_id = ? AND devices.device_id = applications.device_id AND applications.app_id = application_metrics.app_id) AND application_metrics.value <= 20 AND application_metrics.metric LIKE '%_id231'
+
+#MYSQL: Query the DB for smart SSD wear above - NOT AN ALERT RULE!
+SELECT metric,value FROM application_metrics WHERE metric REGEXP '^disk_.*_id231';
